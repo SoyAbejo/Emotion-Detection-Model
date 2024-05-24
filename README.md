@@ -31,7 +31,7 @@ Users will input text prompts into the system, which will then analyze the text 
 
 The project will utilize a publicly available dataset containing text labeled with emotions:
 
-* [Emotion Dataset from Hugging Face](https://huggingface.co/datasets/dair-ai/emotion) - This dataset includes text data with corresponding emotion labels and is available under the "other" license.
+* [Emotion Dataset from Hugging Face](https://huggingface.co/datasets/dair-ai/emotion) - This dataset includes text data with corresponding emotion labels. **Licensing Information:** The dataset should be used for educational and research purposes only.
 
 The model will leverage NLP techniques and machine learning algorithms, specifically the Naive Bayes classifier, due to its simplicity and effectiveness in text classification tasks.
 
