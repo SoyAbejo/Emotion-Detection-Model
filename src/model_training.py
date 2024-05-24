@@ -18,9 +18,10 @@ def train_model(X_train, y_train):
     vectorizer = TfidfVectorizer()
     X_train_tfidf = vectorizer.fit_transform(X_train)
     
-    # GridSearchCV para optimización de hiperparámetros
+    # Ampliar GridSearchCV para optimización de hiperparámetros
     parameters = {
-        'alpha': [0.5, 1.0, 1.5, 2.0]
+        'alpha': [0.1, 0.5, 1.0, 1.5, 2.0, 5.0],
+        'fit_prior': [True, False]
     }
     nb = MultinomialNB()
     clf = GridSearchCV(nb, parameters, cv=5, scoring='accuracy')
