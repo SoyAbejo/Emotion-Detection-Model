@@ -86,7 +86,8 @@ This command will discover and execute all unit tests located in the tests direc
 By default, the script includes an example text. You can modify the script to test different inputs.
 
 ### Results
-The model achieved an accuracy of 66.34% on the test set. Below are the detailed performance metrics with the names of the emotions:
+The model achieved an accuracy of 70.875% on the test set. Below are the detailed performance metrics with the names of the emotions:
+
 ```bash
 Accuracy: 0.70875
 Classification Report:
@@ -103,6 +104,41 @@ Classification Report:
    macro avg       0.87      0.48      0.49      3200
 weighted avg       0.78      0.71      0.66      3200
 ```
+
+#### Analysis
+
+1. **Overall Accuracy**:
+   - The model has an overall accuracy of 70.875%, which is a good starting point but indicates room for improvement.
+
+2. **Performance by Class**:
+   - **Sadness and Joy**: These classes have good performance with high recall values, especially "Sadness" with 0.94 and "Joy" with 0.98. This indicates the model is very good at identifying these emotions when they are present.
+   - **Love, Anger, Fear, and Surprise**: These classes show notably lower performance, particularly in terms of recall and f1-score. The "Love" class has perfect precision (1.00) but very low recall (0.11), suggesting the model predicts "Love" correctly when it does, but it does so infrequently. "Surprise" has high precision but extremely low recall (0.02), indicating this emotion is almost never correctly predicted.
+
+3. **Class Imbalance**:
+   - The support for each class shows significant imbalance, with "Surprise" having far fewer examples (113) compared to "Sadness" (946) and "Joy" (1021). This imbalance likely negatively impacts the performance on the less represented classes.
+
+4. **Macro and Weighted Averages**:
+   - **Macro Average**: The macro average f1-score is 0.49, indicating considerable variability in performance across different classes.
+   - **Weighted Average**: The weighted average f1-score is 0.66, suggesting that classes with higher support have a more significant impact on the overall model performance.
+
+### Recommendations for Improvement
+
+1. **Data Collection and Balancing**:
+   - Collect more data for underrepresented classes such as "Love" and "Surprise".
+   - Apply techniques like oversampling (SMOTE) or undersampling to balance the classes.
+
+2. **Hyperparameter Tuning**:
+   - Continue hyperparameter tuning using GridSearchCV or RandomizedSearchCV to find the best parameters for the Naive Bayes model.
+
+3. **Explore More Complex Models**:
+   - Consider using more complex models like Random Forest, SVM, or deep learning models like LSTM or transformers, which may better capture the features of the data.
+
+4. **Error Analysis**:
+   - Conduct error analysis to understand why the model is failing on certain classes and adjust preprocessing and feature extraction accordingly.
+
+5. **Cross-Validation**:
+   - Implement cross-validation to get a more robust estimate of the model's performance and avoid overfitting.
+
 
 ## Challenges
 
