@@ -26,6 +26,7 @@ The model can be integrated into various platforms:
 
 Users will input text prompts into the system, which will then analyze the text and return the detected emotion. This can be used in real-time applications where understanding user sentiment is critical.
 
+**Note:** The current model is designed to work with English text only, as the dataset used contains texts in English.
 
 ## Data sources and AI methods
 
@@ -38,6 +39,23 @@ The model will leverage NLP techniques and machine learning algorithms, specific
 * **Text preprocessing:** Tokenization, stop-word removal, and stemming/lemmatization.
 * **Feature extraction:** Using techniques like TF-IDF to convert text into numerical features.
 * **Modeling:** Training a Naive Bayes classifier to predict emotions based on text input.
+
+## Why Naive Bayes?
+
+### Simplicity and Efficiency
+Naive Bayes is known for its simplicity and efficiency, making it a suitable choice for a basic model. It requires less computational power compared to more complex models, which allows for faster training and prediction times.
+
+### Performance in Text Classification
+Despite its simplicity, Naive Bayes performs exceptionally well for text classification tasks. It works well with small to medium-sized datasets, providing robust results even when the assumptions of feature independence are not fully met.
+
+### Interpretability
+The results and workings of a Naive Bayes model are easier to interpret compared to more complex models like neural networks. This transparency can be beneficial when explaining the model's decisions to stakeholders or end-users.
+
+### Comparison with Other Techniques
+- **Hill climbing and Nearest neighbor method:** These techniques are not typically used for text classification problems and are more suitable for optimization tasks and classification based on distance metrics, respectively.
+- **Bayes Rule and Naive Bayes classifier:** Both are based on Bayes' theorem, but Naive Bayes simplifies the computation by assuming feature independence, making it more practical for our use case.
+- **Linear regression and Logistic regression:** While logistic regression could be a good alternative, it generally requires more computational resources and might not perform significantly better than Naive Bayes for this task.
+- **Neural network and Deep learning:** These models can provide higher accuracy but at the cost of increased complexity, longer training times, and higher computational requirements. For a basic, interpretable, and efficient model, Naive Bayes is preferred.
 
 ## Challenges
 
@@ -62,3 +80,4 @@ Skills and assistance needed:
 ## Acknowledgments
 
 * [Emotion Dataset from Hugging Face](https://huggingface.co/datasets/dair-ai/emotion)
+* Inspiration from various NLP and AI projects shared in the AI community.
