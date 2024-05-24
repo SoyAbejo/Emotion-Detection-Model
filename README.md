@@ -29,15 +29,15 @@ Users will input text prompts into the system, which will then analyze the text 
 
 ## Data sources and AI methods
 
-The project will utilize publicly available datasets containing text labeled with emotions, such as:
+The project will utilize a publicly available dataset containing text labeled with emotions:
 
-* Coming soon
+* [Emotion Dataset from Hugging Face](https://huggingface.co/datasets/dair-ai/emotion) - This dataset includes text data with corresponding emotion labels and is available under the "other" license.
 
-The model will leverage NLP techniques and machine learning algorithms, such as:
+The model will leverage NLP techniques and machine learning algorithms, specifically the Naive Bayes classifier, due to its simplicity and effectiveness in text classification tasks.
 
 * **Text preprocessing:** Tokenization, stop-word removal, and stemming/lemmatization.
-* **Feature extraction:** Using techniques like TF-IDF or word embeddings (Word2Vec, GloVe).
-* **Modeling:** Training classifiers like Logistic Regression, SVM, or deep learning models for better accuracy.
+* **Feature extraction:** Using techniques like TF-IDF to convert text into numerical features.
+* **Modeling:** Training a Naive Bayes classifier to predict emotions based on text input.
 
 ## Challenges
 
@@ -58,3 +58,7 @@ Skills and assistance needed:
 * Collaboration with NLP experts to refine the model.
 * Input from domain experts in customer service and mental health.
 * Development support for creating user-friendly interfaces and APIs.
+
+## Acknowledgments
+
+* [Emotion Dataset from Hugging Face](https://huggingface.co/datasets/dair-ai/emotion)
