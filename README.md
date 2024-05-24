@@ -57,6 +57,53 @@ The results and workings of a Naive Bayes model are easier to interpret compared
 - **Linear regression and Logistic regression:** While logistic regression could be a good alternative, it generally requires more computational resources and might not perform significantly better than Naive Bayes for this task.
 - **Neural network and Deep learning:** These models can provide higher accuracy but at the cost of increased complexity, longer training times, and higher computational requirements. For a basic, interpretable, and efficient model, Naive Bayes is preferred.
 
+## Model Training and Evaluation
+
+### Steps to Train and Evaluate the Model
+
+1. **Install Dependencies**: Make sure all dependencies are installed.
+```bash
+   pip install -r requirements.txt
+```   
+
+2. **Train and Evaluate the Model**: Run the training script to load data, preprocess it, train the model, and evaluate its performance.
+```bash
+    python3 src/model_training.py
+```
+
+### Steps to Test the Model
+
+1. **Run Unit Tests (Optional)**: To ensure that the model and related functions work correctly, you can run the unit tests. Navigate to the project root directory and use the following command:
+```bash
+   python3 -m unittest discover -s tests
+```   
+This command will discover and execute all unit tests located in the tests directory.
+
+2. **Run Personal Tests**: To manually test the trained model on new text inputs, you can use the personal test script. This script will load the saved model and vectorizer, and make predictions on the provided text input. Run the following command:
+```bash
+    python3 tests/test_model.py
+```
+By default, the script includes an example text. You can modify the script to test different inputs.
+
+### Results
+The model achieved an accuracy of 66.34% on the test set. Below are the detailed performance metrics with the names of the emotions:
+```bash
+Accuracy: 0.70875
+Classification Report:
+              precision    recall  f1-score   support
+
+     sadness       0.71      0.94      0.81       946
+         joy       0.65      0.98      0.78      1021
+        love       1.00      0.11      0.20       296
+       anger       0.92      0.47      0.62       427
+        fear       0.92      0.36      0.52       397
+    surprise       1.00      0.02      0.03       113
+
+    accuracy                           0.71      3200
+   macro avg       0.87      0.48      0.49      3200
+weighted avg       0.78      0.71      0.66      3200
+```
+
 ## Challenges
 
 * **Data quality:** Ensuring the dataset used is diverse and representative of different contexts.
