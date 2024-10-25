@@ -5,3 +5,9 @@ jupyter
 datasets
 nltk
 joblib
+transformers
+sentencepiece
+torch
+torchvision
+torchaudio
+sacremoses

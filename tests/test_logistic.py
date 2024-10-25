@@ -3,25 +3,30 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import joblib
 import argparse
-import pandas as pd
 
 # Nombres de las emociones en español e inglés
 emotion_labels_es = ["tristeza", "alegría", "amor", "ira", "miedo", "sorpresa"]
 emotion_labels_en = ["sadness", "joy", "love", "anger", "fear", "surprise"]
 
 def load_model(language):
-    model = joblib.load(f'model/emotion_model_{language}.pkl')
-    vectorizer = joblib.load(f'model/vectorizer_{language}.pkl')
+    # Cargar el modelo entrenado
+    model = joblib.load(f'model/lr_emotion_model_{language}.pkl')
+    vectorizer = joblib.load(f'model/lr_vectorizer_{language}.pkl')
     return model, vectorizer
 
 def predict_emotion(text, model, vectorizer, labels):
+    # Vectorizar el texto de entrada
     text_tfidf = vectorizer.transform([text])
+    
+    # Hacer la predicción
     prediction = model.predict(text_tfidf)
-    return prediction[0]  # Devolver la etiqueta de la emoción
+    
+    # Devolver la etiqueta correspondiente
+    return prediction[0]
 
 if __name__ == "__main__":
     # Configurar el argumento de idioma
-    parser = argparse.ArgumentParser(description="Predecir la emoción usando un modelo entrenado.")
+    parser = argparse.ArgumentParser(description="Predecir la emoción usando un modelo entrenado con Logistic Regression.")
     parser.add_argument('--language', type=str, default="es", choices=["es", "en"], 
                         help="Idioma del dataset: 'es' para español o 'en' para inglés.")
     args = parser.parse_args()
@@ -36,8 +41,8 @@ if __name__ == "__main__":
     model, vectorizer = load_model(language)
 
     # Texto de ejemplo para prueba
-    example_text = "No entro ahí, ni de lejos, qué acojone" if language == "es" else "I won't go there, no way, it's terrifying"
-    
+    example_text = "No puedo más... Es tremendo..." if language == "es" else "I can't take it anymore... It's awful..."
+
     # Predecir la emoción
     predicted_emotion = predict_emotion(example_text, model, vectorizer, emotion_labels)
     
