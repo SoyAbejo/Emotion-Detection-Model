@@ -4,163 +4,107 @@ Final project for the Building AI course
 
 ## Summary
 
-This project aims to develop an AI model capable of detecting the underlying emotion in a user-provided text prompt. The model will classify the text into predefined emotional categories, such as happiness, sadness, anger, surprise, etc. Building AI course project.
+This project develops an AI model capable of detecting underlying emotions in user-provided text. The model classifies text into predefined emotional categories such as happiness, sadness, anger, surprise, etc., and can be trained in either Spanish or English using various machine learning models.
 
 ## Background
 
-Emotional detection in text is a crucial aspect of natural language processing (NLP) with applications in customer service, mental health analysis, social media monitoring, and more. Detecting emotions can help understand user sentiment and improve interactions between humans and machines.
+Emotion detection in text is essential in natural language processing (NLP), with applications in customer service, mental health analysis, social media monitoring, and more. This project explores the importance of emotional intelligence in AI, aiming to enhance human-machine interactions.
 
-* Understanding customer emotions can improve service in call centers.
-* Identifying emotional distress in social media posts can trigger mental health support.
-* Enhancing user experience in AI-driven applications by making them more empathetic.
+- **Customer Service**: Automated systems adjust responses based on detected customer emotions.
+- **Mental Health Apps**: Detecting signs of distress in user input can trigger supportive actions.
+- **Social Media Monitoring**: Brands can analyze public sentiment about their products or services.
 
-My motivation for this project stems from the growing importance of emotional intelligence in technology. As AI systems become more integrated into daily life, ensuring they can understand and respond to human emotions is vital.
+The motivation for this project is the increasing integration of AI in everyday life and the need for AI to understand and respond to human emotions.
 
-## How is it used?
+## Usage
 
-The model can be integrated into various platforms:
+The model can be integrated into various platforms and applications such as customer service, mental health apps, and social media analysis. The user inputs text, and the system analyzes it to return the detected emotion in real-time.
 
-* **Customer service:** Automated systems can use the model to gauge customer sentiment and adjust responses accordingly.
-* **Mental health apps:** Detecting signs of emotional distress in user inputs can trigger supportive measures.
-* **Social media monitoring:** Brands can analyze public sentiment about their products or services.
+**New Feature**: The model now supports both Spanish and English. The original English dataset has been translated into Spanish using `Helsinki-NLP` with `MarianTokenizer` and `MarianMTModel`.
 
-Users will input text prompts into the system, which will then analyze the text and return the detected emotion. This can be used in real-time applications where understanding user sentiment is critical.
+## Data Sources and AI Methods
 
-**Note:** The current model is designed to work with English text only, as the dataset used contains texts in English.
+This project uses the following emotion-labeled dataset:
 
-## Data sources and AI methods
+- [Emotion Dataset from Hugging Face](https://huggingface.co/datasets/dair-ai/emotion): Contains text data with emotion labels, intended for educational and research use.
 
-The project will utilize a publicly available dataset containing text labeled with emotions:
+We train models with Naive Bayes, Logistic Regression, and Backpropagation, using these NLP and machine learning techniques:
 
-* [Emotion Dataset from Hugging Face](https://huggingface.co/datasets/dair-ai/emotion) - This dataset includes text data with corresponding emotion labels. **Licensing Information:** The dataset should be used for educational and research purposes only.
+- **Preprocessing**: Tokenization, stop-word removal, and stemming.
+- **Feature Extraction**: TF-IDF for converting text into numerical features.
+- **Models**:
+  - **Naive Bayes**: A simple and efficient model for text classification.
+  - **Logistic Regression**: Powerful for classification tasks with high accuracy.
+  - **Neural Network with Backpropagation**: Although less accurate in this case, included to explore potential future improvements.
 
-The model will leverage NLP techniques and machine learning algorithms, specifically the Naive Bayes classifier, due to its simplicity and effectiveness in text classification tasks.
+## Model Comparison
 
-* **Text preprocessing:** Tokenization, stop-word removal, and stemming/lemmatization.
-* **Feature extraction:** Using techniques like TF-IDF to convert text into numerical features.
-* **Modeling:** Training a Naive Bayes classifier to predict emotions based on text input.
+Below is the performance of each model in both languages:
 
-## Why Naive Bayes?
+### Naive Bayes
+- **English**: 78.96% accuracy, with strong results for "sadness" and "fear."
+- **Spanish**: 71.53% accuracy, with challenges in predicting "miedo" (fear).
 
-### Simplicity and Efficiency
-Naive Bayes is known for its simplicity and efficiency, making it a suitable choice for a basic model. It requires less computational power compared to more complex models, which allows for faster training and prediction times.
+### Backpropagation
+- **English and Spanish**: 29.56% accuracy, indicating this model is suboptimal for the task.
 
-### Performance in Text Classification
-Despite its simplicity, Naive Bayes performs exceptionally well for text classification tasks. It works well with small to medium-sized datasets, providing robust results even when the assumptions of feature independence are not fully met.
+### Logistic Regression
+- **English**: 87.68% accuracy, showing the best performance overall.
+- **Spanish**: 79.09% accuracy, with good balance across all classes.
 
-### Interpretability
-The results and workings of a Naive Bayes model are easier to interpret compared to more complex models like neural networks. This transparency can be beneficial when explaining the model's decisions to stakeholders or end-users.
-
-### Comparison with Other Techniques
-- **Hill climbing and Nearest neighbor method:** These techniques are not typically used for text classification problems and are more suitable for optimization tasks and classification based on distance metrics, respectively.
-- **Bayes Rule and Naive Bayes classifier:** Both are based on Bayes' theorem, but Naive Bayes simplifies the computation by assuming feature independence, making it more practical for our use case.
-- **Linear regression and Logistic regression:** While logistic regression could be a good alternative, it generally requires more computational resources and might not perform significantly better than Naive Bayes for this task.
-- **Neural network and Deep learning:** These models can provide higher accuracy but at the cost of increased complexity, longer training times, and higher computational requirements. For a basic, interpretable, and efficient model, Naive Bayes is preferred.
+Logistic Regression in English is recommended as the primary model, followed by Logistic Regression in Spanish for bilingual applications.
 
 ## Model Training and Evaluation
 
-### Steps to Train and Evaluate the Model
+### Training and Evaluation Instructions
 
-1. **Install Dependencies**: Make sure all dependencies are installed.
+1. **Install Dependencies**: Ensure all dependencies are installed.
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+2. **Train and Evaluate the Model**: Run the training script for your chosen language (en or es).
+    ```bash
+    python src/logistic_regression_training.py --language en
+    ```
+
+3. **Run Unit Tests**: Optional, to verify model functions.
+    ```bash
+    python -m unittest discover -s tests
+    ```
+
+4. **Run Personal Tests**: To manually test the trained model on new text inputs, you can use the test script for your chosen language (en or es). This script will load the saved model and vectorizer, and make predictions on the provided text input. Run the following command:
 ```bash
-   pip install -r requirements.txt
-```   
-
-2. **Train and Evaluate the Model**: Run the training script to load data, preprocess it, train the model, and evaluate its performance.
-```bash
-    python3 src/model_training.py
-```
-
-### Steps to Test the Model
-
-1. **Run Unit Tests (Optional)**: To ensure that the model and related functions work correctly, you can run the unit tests. Navigate to the project root directory and use the following command:
-```bash
-   python3 -m unittest discover -s tests
-```   
-This command will discover and execute all unit tests located in the tests directory.
-
-2. **Run Personal Tests**: To manually test the trained model on new text inputs, you can use the personal test script. This script will load the saved model and vectorizer, and make predictions on the provided text input. Run the following command:
-```bash
-    python3 tests/test_model.py
+    python3 tests/test_logistic.py --language en
 ```
 By default, the script includes an example text. You can modify the script to test different inputs.
 
-### Results
-The model achieved an accuracy of 70.875% on the test set. Below are the detailed performance metrics with the names of the emotions:
-
-```bash
-Accuracy: 0.70875
-Classification Report:
-              precision    recall  f1-score   support
-
-     sadness       0.71      0.94      0.81       946
-         joy       0.65      0.98      0.78      1021
-        love       1.00      0.11      0.20       296
-       anger       0.92      0.47      0.62       427
-        fear       0.92      0.36      0.52       397
-    surprise       1.00      0.02      0.03       113
-
-    accuracy                           0.71      3200
-   macro avg       0.87      0.48      0.49      3200
-weighted avg       0.78      0.71      0.66      3200
-```
-
-#### Analysis
+## Analysis of Results
 
 1. **Overall Accuracy**:
-   - The model has an overall accuracy of 70.875%, which is a good starting point but indicates room for improvement.
-
+   - Logistic Regression in English provides the best accuracy (87.68%) and balanced performance across all classes.
+   
 2. **Performance by Class**:
-   - **Sadness and Joy**: These classes have good performance with high recall values, especially "Sadness" with 0.94 and "Joy" with 0.98. This indicates the model is very good at identifying these emotions when they are present.
-   - **Love, Anger, Fear, and Surprise**: These classes show notably lower performance, particularly in terms of recall and f1-score. The "Love" class has perfect precision (1.00) but very low recall (0.11), suggesting the model predicts "Love" correctly when it does, but it does so infrequently. "Surprise" has high precision but extremely low recall (0.02), indicating this emotion is almost never correctly predicted.
+   - **Sadness and Joy**: High recall and precision values, indicating strong performance.
+   - **Surprise**: Lower accuracy due to fewer examples in the dataset.
 
-3. **Class Imbalance**:
-   - The support for each class shows significant imbalance, with "Surprise" having far fewer examples (113) compared to "Sadness" (946) and "Joy" (1021). This imbalance likely negatively impacts the performance on the less represented classes.
-
-4. **Macro and Weighted Averages**:
-   - **Macro Average**: The macro average f1-score is 0.49, indicating considerable variability in performance across different classes.
-   - **Weighted Average**: The weighted average f1-score is 0.66, suggesting that classes with higher support have a more significant impact on the overall model performance.
-
-### Recommendations for Improvement
-
-1. **Data Collection and Balancing**:
-   - Collect more data for underrepresented classes such as "Love" and "Surprise".
-   - Apply techniques like oversampling (SMOTE) or undersampling to balance the classes.
-
-2. **Hyperparameter Tuning**:
-   - Continue hyperparameter tuning using GridSearchCV or RandomizedSearchCV to find the best parameters for the Naive Bayes model.
-
-3. **Explore More Complex Models**:
-   - Consider using more complex models like Random Forest, SVM, or deep learning models like LSTM or transformers, which may better capture the features of the data.
-
-4. **Error Analysis**:
-   - Conduct error analysis to understand why the model is failing on certain classes and adjust preprocessing and feature extraction accordingly.
-
-5. **Cross-Validation**:
-   - Implement cross-validation to get a more robust estimate of the model's performance and avoid overfitting.
-
+3. **Recommendations for Improvement**:
+   - **Data Balancing**: Use techniques like SMOTE for underrepresented classes.
+   - **Advanced Models**: Consider models like LSTMs or transformers to enhance performance.
 
 ## Challenges
 
-* **Data quality:** Ensuring the dataset used is diverse and representative of different contexts.
-* **Ambiguity in text:** Some emotions can be subtle or mixed, making them hard to classify correctly.
-* **Ethical considerations:** Ensuring the system is used responsibly, especially in sensitive areas like mental health.
+- **Data Quality**: Ensuring the dataset is diverse and representative.
+- **Text Ambiguity**: Emotions can be subtle or mixed, making them hard to classify.
+- **Ethics**: Responsible use is essential, especially in areas like mental health.
 
-## What next?
+## Future Work
 
-To enhance the project:
-
-* **Model improvement:** Incorporate more sophisticated models and larger datasets for better accuracy.
-* **Deployment:** Develop APIs or integrate the model into existing platforms.
-* **User feedback:** Gather feedback from real users to continually refine the system.
-
-Skills and assistance needed:
-
-* Collaboration with NLP experts to refine the model.
-* Input from domain experts in customer service and mental health.
-* Development support for creating user-friendly interfaces and APIs.
+- **Model Improvement**: Incorporate more sophisticated models and larger datasets for better accuracy.
+- **Deployment**: Develop APIs or integrate the model into existing platforms.
+- **User Feedback**: Collect real-user feedback to improve the system further.
 
 ## Acknowledgments
 
-* [Emotion Dataset from Hugging Face](https://huggingface.co/datasets/dair-ai/emotion)
-* Inspiration from various NLP and AI projects shared in the AI community.
+- [Emotion Dataset from Hugging Face](https://huggingface.co/datasets/dair-ai/emotion)
+- Inspiration from various NLP and AI projects shared in the AI community.
