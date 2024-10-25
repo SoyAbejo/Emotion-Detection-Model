@@ -4,3 +4,6 @@ model/*.pth
 
 # Ignorar archivos CSV de datos traducidos y originales
 *.csv
+
+# Ignorar la carpeta del entorno virtual
+venv/
