@@ -7,7 +7,11 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.stem import SnowballStemmer
 
-nltk.download('stopwords')
+# Ensure the stopwords corpus is available without forcing a download
+try:
+    nltk.data.find("corpora/stopwords")
+except LookupError:
+    nltk.download("stopwords")
 
 # Archivos para almacenar los datasets traducidos y originales
 TRANSLATED_DATA_FILE_ES = "translated_emotion_dataset_es.csv"
@@ -50,8 +54,13 @@ def load_and_split_data(language="es"):
         df = pd.read_csv(data_file)
     else:
         # Cargar el dataset en inglés desde la fuente original
-        dataset = load_dataset("dair-ai/emotion")
-        df = pd.DataFrame(dataset['train'])
+        try:
+            dataset = load_dataset("dair-ai/emotion")
+            df = pd.DataFrame(dataset["train"])
+        except Exception as e:
+            raise RuntimeError(
+                "Failed to download dataset. Provide it locally or ensure internet access."
+            ) from e
 
         if language == "es":
             print("Traduciendo el dataset al español...")
