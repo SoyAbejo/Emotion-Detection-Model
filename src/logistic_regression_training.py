@@ -9,22 +9,32 @@ from sklearn.model_selection import GridSearchCV
 from src.data_preprocessing import load_and_split_data
 from sklearn.feature_extraction.text import TfidfVectorizer
 
+
 def train_lr_model(X_train, y_train):
     vectorizer = TfidfVectorizer(ngram_range=(1, 2))  # Unigramas y bigramas
     X_train_tfidf = vectorizer.fit_transform(X_train)
     
     # Parámetros para optimización con GridSearch
     parameters = {
-        'C': [0.01, 0.1, 1, 10, 100],  # Probar más valores de C
-        'solver': ['lbfgs', 'liblinear', 'sag', 'saga'],  # Probar otros solvers
-        'max_iter': [2000, 3000]  # Aumentar las iteraciones
+        'C': [0.1, 1, 10],  # valores razonables para C
+        'solver': ['lbfgs'],  # solvers estables para multiclase
+        'max_iter': [5000]  # más iteraciones para converger
     }
-    lr = LogisticRegression(class_weight='balanced', max_iter=500)
-    clf = GridSearchCV(lr, parameters, cv=5, scoring='accuracy')
+
+    lr = LogisticRegression(class_weight='balanced')
+    clf = GridSearchCV(
+        lr, 
+        parameters, 
+        cv=5, 
+        scoring='accuracy', 
+        n_jobs=-1,   # usa todos los núcleos
+        verbose=1    # muestra el progreso
+    )
     clf.fit(X_train_tfidf, y_train)
     
     model = clf.best_estimator_
     return model, vectorizer
+
 
 def evaluate_model(model, vectorizer, X_test, y_test, labels):
     X_test_tfidf = vectorizer.transform(X_test)
@@ -32,6 +42,7 @@ def evaluate_model(model, vectorizer, X_test, y_test, labels):
     accuracy = accuracy_score(y_test, y_pred)
     report = classification_report(y_test, y_pred, target_names=labels)
     return accuracy, report
+
 
 if __name__ == "__main__":
     # Configurar el argumento de idioma
@@ -63,5 +74,6 @@ if __name__ == "__main__":
     print(report)
     
     # Guardar el modelo y el vectorizador con nombres basados en el idioma
+    os.makedirs("model", exist_ok=True)
     joblib.dump(model, f'model/lr_emotion_model_{language}.pkl')
     joblib.dump(vectorizer, f'model/lr_vectorizer_{language}.pkl')
