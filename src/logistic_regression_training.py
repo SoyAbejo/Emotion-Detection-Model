@@ -8,7 +8,8 @@ from sklearn.metrics import accuracy_score, classification_report
 from sklearn.model_selection import GridSearchCV
 from src.data_preprocessing import load_and_split_data
 from sklearn.feature_extraction.text import TfidfVectorizer
-
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+import matplotlib.pyplot as plt
 
 def train_lr_model(X_train, y_train):
     vectorizer = TfidfVectorizer(ngram_range=(1, 2))  # Unigramas y bigramas
@@ -31,7 +32,8 @@ def train_lr_model(X_train, y_train):
         verbose=1    # muestra el progreso
     )
     clf.fit(X_train_tfidf, y_train)
-    
+   
+
     model = clf.best_estimator_
     return model, vectorizer
 
@@ -41,6 +43,12 @@ def evaluate_model(model, vectorizer, X_test, y_test, labels):
     y_pred = model.predict(X_test_tfidf)
     accuracy = accuracy_score(y_test, y_pred)
     report = classification_report(y_test, y_pred, target_names=labels)
+    #PREDICCION
+    cm = confusion_matrix(y_test, y_pred)
+    disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=labels)
+    disp.plot(cmap="Blues")
+    plt.title("Matriz de confusión")
+    plt.show()
     return accuracy, report
 
 

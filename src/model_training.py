@@ -8,6 +8,8 @@ from sklearn.metrics import accuracy_score, classification_report
 from sklearn.model_selection import GridSearchCV
 from src.data_preprocessing import load_and_split_data
 from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+import matplotlib.pyplot as plt
 
 def train_model(X_train, y_train):
     vectorizer = TfidfVectorizer()
@@ -30,6 +32,12 @@ def evaluate_model(model, vectorizer, X_test, y_test, labels):
     y_pred = model.predict(X_test_tfidf)
     accuracy = accuracy_score(y_test, y_pred)
     report = classification_report(y_test, y_pred, target_names=labels)
+    #PREDICCION
+    cm = confusion_matrix(y_test, y_pred)
+    disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=model.classes_)
+    disp.plot(cmap="Blues")
+    plt.title("Matriz de confusión")
+    plt.show()
     return accuracy, report
 
 if __name__ == "__main__":

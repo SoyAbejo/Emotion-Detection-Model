@@ -7,6 +7,7 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.stem import SnowballStemmer
 
+
 # Ensure the stopwords corpus is available without forcing a download
 try:
     nltk.data.find("corpora/stopwords")
@@ -55,16 +56,18 @@ def load_and_split_data(language="es"):
     else:
         # Cargar el dataset en inglés desde la fuente original
         try:
-            dataset = load_dataset("dair-ai/emotion")
-            df = pd.DataFrame(dataset["train"])
+            #dataset = load_dataset("dair-ai/emotion")
+            #df = pd.DataFrame(dataset["train"])
+            df = pd.read_csv("dataset-traduccion.csv")
+            df.info()
         except Exception as e:
             raise RuntimeError(
                 "Failed to download dataset. Provide it locally or ensure internet access."
             ) from e
 
-        if language == "es":
-            print("Traduciendo el dataset al español...")
-            df['text'] = translate_texts(df['text'])
+        #if language == "es":
+         #   print("Traduciendo el dataset al español...")
+         #   df['text'] = translate_texts(df['text'])
 
         # Mapeo de etiquetas emocionales numéricas a texto según el idioma
         emotion_mapping_es = {
@@ -107,5 +110,6 @@ def load_and_split_data(language="es"):
     X = df['text']
     y = df['label']
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
     
     return X_train, X_test, y_train, y_test
