@@ -41,7 +41,7 @@ if __name__ == "__main__":
     model, vectorizer = load_model(language)
 
     # Texto de ejemplo para prueba
-    example_text = "No puedo más... Es tremendo..." if language == "es" else "I can't take it anymore... It's awful..."
+    example_text = input("como te sientes\n")
 
     # Predecir la emoción
     predicted_emotion = predict_emotion(example_text, model, vectorizer, emotion_labels)
